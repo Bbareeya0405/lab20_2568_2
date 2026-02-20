@@ -129,6 +129,40 @@ bool Unit::isDead(){
 	else return false;
 }
 
+Equipment::Equipment(int h,int a,int d){
+	hpmax = h;
+	atk = a;
+	def = d;
+}
+
+vector<int> Equipment::getStat(){
+	vector<int> stat(3);
+	stat[0] = hpmax;
+	stat[1] = atk;
+	stat[2] = def;
+	return stat;
+}
+
+void Unit::equip(Equipment *eq){
+
+	if(equipment != NULL){
+		vector<int> oldStat = equipment->getStat();
+		hpmax -= oldStat[0];
+		atk   -= oldStat[1];
+		def   -= oldStat[2];
+	}
+
+	equipment = eq;
+
+	vector<int> newStat = equipment->getStat();
+	hpmax += newStat[0];
+	atk   += newStat[1];
+	def   += newStat[2];
+
+	if(hp > hpmax)
+		hp = hpmax;
+}
+
 void drawScene(char p_action,int p,char m_action,int m){
 	cout << "                                                       \n";
 	if(p_action == 'A'){
